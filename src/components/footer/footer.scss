@@ -1,0 +1,42 @@
+.footer {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: calc(100% - 60px);
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    &__container {
+        display: grid;
+        grid-template-columns: auto auto;
+        column-gap: 10px;
+        align-items: center;
+    }
+    
+    &__button {
+      background-color: transparent;
+      border: none;
+      color: #333;
+      font-size: 16px;
+      transition: opacity 0.3s ease;
+      display: center;
+      align-items: center;
+    
+      &:hover {
+        opacity: 0.8;
+      }
+
+      &:hover > svg {
+        cursor: pointer;
+      }
+    }
+  
+    &.keyboard-open {
+        bottom: auto;
+        top: 20px;
+    }
+  }
+  
