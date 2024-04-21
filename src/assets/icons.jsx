@@ -34,7 +34,7 @@ export const OpenBookIcon = ({ width, height }) => {
       );
 };
 
-export const SearcIcon = ({ width, height }) => {
+export const SearchIcon = ({ width, height }) => {
     return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
