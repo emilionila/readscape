@@ -6,10 +6,11 @@ const SearchBar = () => {
   return (
     <div className="searchBar">
       <div className="searchBar__inputContainer">
+        <div className="searchBar__divider"></div>
+        <input type="text" className="searchBar__input" placeholder="Search" />
         <div className="searchBar__icon">
           <SearchIcon width="20px" height="20px" />
         </div>
-        <input type="text" className="searchBar__input" placeholder="Search for a book..." />
       </div>
     </div>
   );
