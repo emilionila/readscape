@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './footer.scss';
-import { ProfileIcon, OpenBookIcon } from '../../assets/icons';
+import { OpenBookIcon, SearchIcon, CalendarIcon, CommunityIcon } from '../../assets/icons';
 
 const Footer = () => {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsKeyboardOpen(window.innerHeight !== window.outerHeight);
+      setIsKeyboardOpen(window.innerHeight < 500);
     };
 
     window.addEventListener('resize', handleResize);
@@ -23,10 +23,20 @@ const Footer = () => {
     <footer className={isKeyboardOpen ? 'footer keyboard-open' : 'footer'}>
       <div className="footer__container">
         <div className="footer__button">
-          <OpenBookIcon width="50px" height="50px"/>
+          <OpenBookIcon width="30px" height="30px"/>
+          <span>Library</span>
         </div>
         <div className="footer__button">
-          <ProfileIcon width="50px" height="50px"/> 
+          <SearchIcon width="30px" height="30px"/>
+          <span>Search</span>
+        </div>
+        <div className="footer__button">
+          <CalendarIcon width="30px" height="30px"/>
+          <span>Analytics</span>
+        </div>
+        <div className="footer__button">
+          <CommunityIcon width="30px" height="30px"/>
+          <span>Community</span>
         </div>
       </div>
     </footer>

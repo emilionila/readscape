@@ -1,1 +1,1 @@
-export * from './booksinProgressPage.js';
+export * from './booksInProgressPage.jsx';
