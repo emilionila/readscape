@@ -1,13 +1,12 @@
 import {CustomButton} from "../../components/customButton";
-import "./WelcomePage.scss";
+import styles from "./WelcomePage.module.scss";
 import WelcomeImage from "../../images/welcome.svg";
 import {useNavigate} from "react-router-dom";
 
 export const WelcomePage = () => {
-    const disabled = false;
     let navigate = useNavigate();
     const handleSignUpClick = () => {
-       navigate('signup');
+        navigate('signup');
     }
 
     const handleLogInClick = () => {
@@ -15,19 +14,18 @@ export const WelcomePage = () => {
     }
 
     return (
-        <div className="container">
+        <div className={styles.container}>
             <img
                 src={WelcomeImage}
                 alt="welcome image"
-                className="welcomeImage"
+                className={styles.welcomeImage}
             />
-            <h2 className='title'>
+            <h2 className={styles.title}>
                 Let's start your reading journey?
             </h2>
             <CustomButton
                 type={'submit'}
                 title={'LogIn'}
-                disabled={disabled}
                 onClick={handleLogInClick}
                 btnStyle='full'
             />
@@ -35,7 +33,6 @@ export const WelcomePage = () => {
             <CustomButton
                 type={'submit'}
                 title={'SignUp'}
-                disabled={disabled}
                 onClick={handleSignUpClick}
                 btnStyle='empty'
             />

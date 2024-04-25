@@ -1,0 +1,10 @@
+@import "../../assets/main";
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: $primary;
+  margin: 20px 20px 0 20px;
+}
