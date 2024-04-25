@@ -1,0 +1,48 @@
+@import "src/assets/main";
+
+.button {
+  padding: 13px 109px;
+  width: 90%;
+  border-radius: 50px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  border: 1px solid;
+  transition: all 0.3s ease-in-out;
+    &:hover {
+      color: $secondary;
+      background-color: $btn-hover;
+      border-color: $btn-hover;
+    }
+    &:disabled {
+      color: $primary;
+      background-color: $btn-disabled;
+      border-color: $primary;
+    }
+}
+
+.full {
+  color: $secondary;
+  background-color: $primary;
+  border-color: $primary;
+}
+
+.empty {
+  color: $primary;
+  background-color: transparent;
+  border-color: $primary;
+}
+
+
+@media (min-width: 589px) {
+  .button {
+    width: 60%;
+  }
+}
+
+@media (min-width: 780px) {
+  .button {
+    width: 40%;
+  }
+}

@@ -1,0 +1,36 @@
+@import "src/assets/main";
+
+.container {
+  display: flex;
+  margin: auto;
+  padding: 20px;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.welcomeImage {
+  width: 80%;
+  display: block;
+}
+
+.title {
+  font-size: 24px;
+  text-align: center;
+}
+
+@media (min-width: 589px) {
+  .welcomeImage {
+    width: 60%;
+  }
+}
+
+@media (min-width: 780px) {
+  .welcomeImage {
+    width: 30%;
+  }
+}
+
+
