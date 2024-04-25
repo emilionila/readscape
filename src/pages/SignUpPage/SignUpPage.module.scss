@@ -39,3 +39,23 @@
   font-size: 12px;
   color: $btn-hover;
 }
+
+@media (min-width: 589px) {
+  .signupContainer__input {
+    width: 60%;
+  }
+
+  .signupContainer__signupImage {
+    width: 60%;
+  }
+}
+
+@media (min-width: 780px) {
+  .signupContainer__input {
+    width: 40%;
+  }
+
+  .signupContainer__signupImage {
+    width: 30%;
+  }
+}

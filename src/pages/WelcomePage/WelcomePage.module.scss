@@ -21,6 +21,16 @@
   text-align: center;
 }
 
+@media (min-width: 589px) {
+  .welcomeImage {
+    width: 60%;
+  }
+}
 
+@media (min-width: 780px) {
+  .welcomeImage {
+    width: 30%;
+  }
+}
 
 

@@ -33,3 +33,16 @@
   background-color: transparent;
   border-color: $primary;
 }
+
+
+@media (min-width: 589px) {
+  .button {
+    width: 60%;
+  }
+}
+
+@media (min-width: 780px) {
+  .button {
+    width: 40%;
+  }
+}

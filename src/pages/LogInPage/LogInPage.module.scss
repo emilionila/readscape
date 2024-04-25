@@ -34,3 +34,23 @@
     }
   }
 }
+
+@media (min-width: 589px) {
+  .loginContainer__input {
+    width: 60%;
+  }
+
+  .loginContainer__loginImage {
+    width: 60%;
+  }
+}
+
+@media (min-width: 780px) {
+  .loginContainer__input {
+    width: 40%;
+  }
+
+  .loginContainer__loginImage {
+    width: 30%;
+  }
+}
