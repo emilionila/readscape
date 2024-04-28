@@ -1,7 +1,7 @@
 import {initializeApp} from 'firebase/app';
-import {getAuth, onAuthStateChanged} from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-const firebaseConfig = initializeApp({
+export const firebaseConfig = initializeApp({
     apiKey: "AIzaSyCIDQ06opVNDk8rwxTThOwg52yGAsZqrPE",
     authDomain: "readscape-f2a84.firebaseapp.com",
     projectId: "readscape-f2a84",
@@ -11,14 +11,17 @@ const firebaseConfig = initializeApp({
     measurementId: "G-F6RD5Y90PC"
 });
 
+
 const auth = getAuth(firebaseConfig);
 
 export const checkUser = () => {
-    onAuthStateChanged(auth, user => {
-        if (user !== null) {
-            console.log('logged in')
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            console.log('there is user')
+            const uid = user.uid;
+            console.log(user.email)
         } else {
-            console.log('no user')
+            console.log('there is no user')
         }
     });
 }
