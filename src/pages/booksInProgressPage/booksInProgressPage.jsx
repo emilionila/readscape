@@ -4,15 +4,18 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import SearchBar from '../../components/searchBar/searchBar';
 import AddingButton from '../../components/addingButton/addingButton';
-import {checkUser} from "../../db/db";
+import ReadingList from '../../components/readingList/readingList';
+import useAuth from "../../db/user";
 
-checkUser();
 
 export const BooksInProgressPage = () => {
+    const user = useAuth();
+
     return (
         <div>
             <Header />
             <SearchBar />
+            <ReadingList userId={user ? user.uid : null} />
             <AddingButton />
             <Footer />
         </div>

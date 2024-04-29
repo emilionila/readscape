@@ -25,8 +25,7 @@ export const SignUpPage = () => {
                     // Signed up
                     const user = userCredential.user;
                     console.log(user);
-
-                    navigate('inprogress');
+                    navigate('/inprogress');
                 })
                 .catch((error) => {
                     console.log(error);
