@@ -5,14 +5,16 @@ import Header from '../../components/header/header';
 import SearchBar from '../../components/searchBar/searchBar';
 import AddingButton from '../../components/addingButton/addingButton';
 import ReadingList from '../../components/readingList/readingList';
-
+import useAuth from "../../db/user";
 
 export const BooksInProgressPage = () => {
+    const user = useAuth();
+
     return (
         <div>
             <Header />
             <SearchBar />
-            <ReadingList />
+            <ReadingList userId={user ? user.uid : null} />
             <AddingButton />
             <Footer />
         </div>
