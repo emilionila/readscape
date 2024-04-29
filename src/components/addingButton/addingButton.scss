@@ -1,4 +1,9 @@
-.addingButton {
+.buttonContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .addingButton {
     display: inline-block;
     outline: none;
     cursor: pointer;
@@ -24,3 +29,5 @@
     background-color: #518a6b;
   };
 }
+}
+
