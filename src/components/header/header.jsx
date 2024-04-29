@@ -14,8 +14,8 @@ const Header = () => {
     }, [user]);
 
     console.log(userName, 'user')
-    
     const truncatedUserName = userName.length > 10 ? userName.slice(0, 10) + '...' : userName;
+
 
     return (
         <header className="header">

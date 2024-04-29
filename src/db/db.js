@@ -14,16 +14,18 @@ export const firebaseConfig = initializeApp({
     measurementId: ""
 });
 
+
 export const firestore = getFirestore(firebaseConfig);
 export const storage = getStorage(firebaseConfig);
 
 const auth = getAuth(firebaseConfig);
-const db = getFirestore(firebaseConfig);
+
 
 export const checkUser = () => {
     onAuthStateChanged(auth, (user) => {
         if (user) {
             console.log('User ID:', user.uid);
+
             console.log('there is user')
             const uid = user.uid;
             console.log(user.email)
