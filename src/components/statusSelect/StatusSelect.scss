@@ -1,0 +1,33 @@
+.status-select-container {
+    .status-select-field {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+
+        font-size: 16px;
+      }
+
+      select option {
+        margin: 5%;
+        background-color: #F9F7F6;
+        color: #A2A1A0;
+      }
+
+      select option:hover, select option:focus, select option:active {
+        outline-color: #6EAA89 !important;
+        color: #fff !important;
+      }
+    }
+  }
