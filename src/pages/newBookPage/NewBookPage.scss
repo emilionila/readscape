@@ -1,0 +1,81 @@
+.book-form-container {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.book-form-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-field {
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+}
+
+.image-preview {
+  max-width: 100px;
+  margin-top: 10px;
+}
+
+.save-button {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  margin: 20px 0px 20px 0px;
+  font-size: 14px;
+  line-height: 1;
+  border-radius: 16px;
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.3s;
+  border: 2px solid transparent;
+  letter-spacing: 2px;
+  min-width: 160px;
+  width: 100%;
+  text-transform: uppercase;
+  white-space: normal;
+  font-weight: 700;
+  text-align: center;
+  padding: 16px 14px 18px;
+  color: #fff;
+  background-color: #6eaa89;
+  height: 48px;
+}
+
+.save-button:hover {
+  background-color: #518a6b;
+};
+
+@media (max-width: 768px) {
+  .book-form-container {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .input-field input,
+  .input-field select,
+  .input-field textarea {
+    font-size: 14px;
+  }
+}
