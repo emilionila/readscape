@@ -6,14 +6,21 @@
   padding: 15px 30px;
 }
 
-.header__greeting{
-  margin-right: 5px;
-}
-
 .header__left {
   display: flex;
   align-items: center;
+
+  .header__welcome-list {
+    list-style-type: none;
+
 }
+
+.header__welcome-list li {
+    margin-top: 0; 
+    margin-bottom: -5px;
+}
+}
+
 
 .header__right {
   display: flex;
