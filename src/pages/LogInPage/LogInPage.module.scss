@@ -35,6 +35,11 @@
   }
 }
 
+.error {
+  color: $accent;
+  font-size: 12px;
+}
+
 @media (min-width: 589px) {
   .loginContainer__input {
     width: 60%;

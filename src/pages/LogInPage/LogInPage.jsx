@@ -1,43 +1,64 @@
+import React, { useEffect, useState } from 'react';
 import LoginImage from "../../images/login.svg";
-import {useEffect, useState} from "react";
 import styles from './LogInPage.module.scss';
-import {CustomButton} from "../../components/customButton";
-import {BackButton} from "../../components/backButton";
-import {useNavigate} from "react-router-dom";
-import {signInWithEmailAndPassword, getAuth} from "firebase/auth";
-import {firebaseConfig} from "../../db/db";
-
+import { CustomButton } from "../../components/customButton";
+import { BackButton } from "../../components/backButton";
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword, getAuth, UserCredential } from "firebase/auth";
+import { firebaseConfig } from "../../db/db";
 
 const auth = getAuth(firebaseConfig);
 
 export const LogInPage = () => {
     const navigate = useNavigate();
 
-    const [disabled, setDisabled] = useState(true)
+    const [disabled, setDisabled] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
     useEffect(() => {
-        if (email !== '' && password !== '') {
-            setDisabled(false)
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (!isValidEmail && email !== '') {
+            setError("Invalid email");
+        } else {
+            setError("");
         }
+
+        setError("");
+        setDisabled(!isValidEmail || password === '');
     }, [email, password]);
 
-    const handleLogIn = (email, password) => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user)
-                navigate('/inprogress');
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
+    const handleLogIn = async (email, password) => {
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            console.log("User:", user);
+            navigate('/inprogress');
+        } catch (error) {
+            console.error("Login error:", error);
+            let errorMessage = "";
+            switch (error.code) {
+                case "auth/user-not-found":
+                    errorMessage = "User not found, try to SignIn";
+                    break;
+                case "auth/wrong-password":
+                    errorMessage = "Wrong password, try again";
+                    break;
+                case "auth/invalid-credential":
+                    errorMessage = "Incorrect email or password";
+                    break;
+                default:
+                    errorMessage = "An unknown error occurred";
+            }
+            setError(errorMessage);
+        }
+    };
+
 
     return (
         <>
-            <BackButton/>
+            <BackButton />
             <div className={styles.loginContainer}>
                 <img
                     src={LoginImage}
@@ -59,6 +80,7 @@ export const LogInPage = () => {
                         placeholder={'Enter your password'}
                         className={styles.loginContainer__input}
                     />
+                    {error && <p className={styles.error}>{error}</p>}
                 </div>
 
                 <CustomButton
@@ -70,5 +92,5 @@ export const LogInPage = () => {
                 />
             </div>
         </>
-    )
-}
+    );
+};
