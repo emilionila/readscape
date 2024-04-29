@@ -29,6 +29,8 @@ const Header = () => {
 
     const displayedUserName = isLargeScreen ? userName : (userName.length > 20 ? userName.slice(0, 20) + '...' : userName);
 
+
+
     return (
         <header className="header">
             <div className="header__left">
