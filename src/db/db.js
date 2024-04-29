@@ -2,13 +2,7 @@ import {initializeApp} from 'firebase/app';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const firebaseConfig = initializeApp({
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: ""
+
 });
 
 

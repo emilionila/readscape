@@ -43,7 +43,7 @@
   display: inline-block;
   outline: none;
   cursor: pointer;
-  margin: 20px 0px 20px 0px;
+  margin: 20px 0 40px 0;
   font-size: 14px;
   line-height: 1;
   border-radius: 16px;
@@ -72,7 +72,7 @@
     padding: 10px;
     font-size: 14px;
   }
-  
+
   .input-field input,
   .input-field select,
   .input-field textarea {

@@ -4,6 +4,7 @@ import StatusSelect from '../../components/statusSelect/StatusSelect';
 import CoverImageInput from '../../components/coverImage/CoverImage';
 import TextAreaInput from '../../components/textInput/TextInput';
 import './NewBookPage.scss';
+import {BackButton} from "../../components/backButton";
 
 const NewBookPage = () => {
   const [title, setTitle] = useState('');
@@ -14,7 +15,7 @@ const NewBookPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     //add logic
 
     setTitle('');
@@ -25,28 +26,30 @@ const NewBookPage = () => {
   };
 
   return (
-    <div className="book-form-container">
-      <h2 className="book-form-title">Add New Book</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-field">
-          <CoverImageInput onChange={setCoverImage} />
+      <>
+        <BackButton/>
+        <div className="book-form-container">
+          <h2 className="book-form-title">Add New Book</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="form-field">
+              <CoverImageInput onChange={setCoverImage}/>
+            </div>
+            <div className="form-field">
+              <TitleInput value={title} onChange={setTitle}/>
+            </div>
+            <div className="form-field">
+              <StatusSelect value={status} onChange={setStatus}/>
+            </div>
+            <div className="form-field">
+              <TextAreaInput label="Description/Note" value={description} onChange={setDescription}/>
+            </div>
+            <div className="form-field">
+              <TextAreaInput label="Feedback" value={feedback} onChange={setFeedback}/>
+            </div>
+            <button className='save-button' type="submit">Add Book</button>
+          </form>
         </div>
-        <div className="form-field">
-          <TitleInput value={title} onChange={setTitle} />
-        </div>
-        <div className="form-field">
-          <StatusSelect value={status} onChange={setStatus} />
-        </div>
-        
-        <div className="form-field">
-          <TextAreaInput label="Description/Note" value={description} onChange={setDescription} />
-        </div>
-        <div className="form-field">
-          <TextAreaInput label="Feedback" value={feedback} onChange={setFeedback} />
-        </div>
-        <button className='save-button' type="submit">Add Book</button>
-      </form>
-    </div>
+      </>
   );
 };
 

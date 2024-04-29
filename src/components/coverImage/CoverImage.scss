@@ -4,26 +4,24 @@
   .cover-image-field {
     margin-bottom: 20px;
     display: flex;
-    gap: 10px;
     flex-direction: column;
-    align-items: center;
     width: 100%;
-    
-    
+
+
     input[type="file"] {
       display: none; /* Hide the default file input */
     }
-    
+
     .title {
       display: block;
       margin-bottom: 5px;
       font-weight: bold;
     }
-    
+
     .upload-button {
-      padding: 13px 109px;
-      width: 90%;
-      border-radius: 50px;
+      padding: 13px 50px;
+      width: 100%;
+      border-radius: 5px;
       text-align: center;
       font-family: "Poppins", sans-serif;
       font-weight: 500;
@@ -31,13 +29,13 @@
       border: 1px solid;
       transition: all 0.3s ease-in-out;
     }
-    
+
     .upload-button:hover {
       color: $secondary;
       background-color: $btn-hover;
       border-color: $btn-hover;
     }
-    
+
     .preview-image {
       display: block;
       max-width: 200px;
