@@ -1,0 +1,23 @@
+.notFoundContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.notFoundImage {
+  width: 80%;
+  display: block;
+  margin: auto;
+}
+
+@media (min-width: 589px) {
+  .notFoundImage {
+    width: 60%;
+  }
+}
+
+@media (min-width: 780px) {
+  .notFoundImage {
+    width: 30%;
+  }
+}
