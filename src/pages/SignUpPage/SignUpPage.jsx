@@ -26,7 +26,6 @@ export const SignUpPage = () => {
             setError('');
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    // Signed up
                     const user = userCredential.user;
                     console.log(user);
                     navigate("/inprogress");
@@ -45,18 +44,18 @@ export const SignUpPage = () => {
     const handleGoogleSignUp = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
+                navigate("/inprogress");
+
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
                 console.log(token, 'userGoogleToken')
                 const user = result.user;
                 console.log(user, 'user')
             }).catch((error) => {
-            // Handle Errors here.
+            console.log(error)
             const errorCode = error.code;
             const errorMessage = error.message;
-            // The email of the user's account used.
             const email = error.customData.email;
-            // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
 
         });

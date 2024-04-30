@@ -4,13 +4,15 @@ import styles from './LogInPage.module.scss';
 import { CustomButton } from "../../components/customButton";
 import { BackButton } from "../../components/backButton";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, getAuth, UserCredential } from "firebase/auth";
+import {signInWithEmailAndPassword, getAuth, UserCredential, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import { firebaseConfig } from "../../db/db";
 
 const auth = getAuth(firebaseConfig);
 
 export const LogInPage = () => {
     const navigate = useNavigate();
+    const provider = new GoogleAuthProvider();
+
 
     const [disabled, setDisabled] = useState(true);
     const [email, setEmail] = useState("");
@@ -55,6 +57,25 @@ export const LogInPage = () => {
         }
     };
 
+    const handleGoogleLogIn = () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                navigate("/inprogress");
+
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                console.log(token, 'userGoogleToken')
+                const user = result.user;
+                console.log(user, 'user')
+            }).catch((error) => {
+            console.log(error)
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const email = error.customData.email;
+            const credential = GoogleAuthProvider.credentialFromError(error);
+
+        });
+    }
 
     return (
         <>
@@ -90,6 +111,8 @@ export const LogInPage = () => {
                     btnStyle='full'
                     onClick={() => handleLogIn(email, password)}
                 />
+                <p className={styles.googleLogIn} onClick={handleGoogleLogIn}>LogIn with Google</p>
+
             </div>
         </>
     );
