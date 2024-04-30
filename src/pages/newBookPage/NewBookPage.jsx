@@ -1,28 +1,56 @@
 import React, { useState } from 'react';
-import TitleInput from '../../components/titleInput/TitleInput';
+import ShortInput from '../../components/shortInput/ShortInput';
 import StatusSelect from '../../components/statusSelect/StatusSelect';
 import CoverImageInput from '../../components/coverImage/CoverImage';
 import TextAreaInput from '../../components/textInput/TextInput';
 import './NewBookPage.scss';
-import {BackButton} from "../../components/backButton";
+import { BackButton } from "../../components/backButton";
+import { firestore, storage } from '../../db/db'
 
 const NewBookPage = () => {
   const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
   const [status, setStatus] = useState('reading');
   const [description, setDescription] = useState('');
   const [feedback, setFeedback] = useState('');
   const [coverImage, setCoverImage] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleInputChange = (newValue, setter) => {
+    setter(newValue);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //add logic
+    try {
 
-    setTitle('');
-    setStatus('reading');
-    setDescription('');
-    setFeedback('');
-    setCoverImage(null);
+      const storageRef = storage.ref();
+      const imageRef = storageRef.child(coverImage.name);
+      await imageRef.put(coverImage);
+      const imageUrl = await imageRef.getDownloadURL();
+
+      // Save book data (including cover image URL) to Firestore
+      await firestore.collection('books').add({
+        title,
+        author,
+        status,
+        description,
+        feedback,
+        imageUrl
+      });
+
+      setTitle('');
+      setAuthor('');
+      setStatus('reading');
+      setDescription('');
+      setFeedback('');
+      setCoverImage(null);
+
+    } catch (error) {
+      console.error('Error saving book data:', error.message);
+    }
+
+    
   };
 
   return (
@@ -35,7 +63,22 @@ const NewBookPage = () => {
               <CoverImageInput onChange={setCoverImage}/>
             </div>
             <div className="form-field">
-              <TitleInput value={title} onChange={setTitle}/>
+              <ShortInput
+                label="Title"
+                type="text"
+                value={title}
+                onChange={(newValue) => handleInputChange(newValue, setTitle)}
+                placeholder="Enter book title..."
+              />
+            </div>
+            <div className="form-field">
+              <ShortInput
+                label="Author"
+                type="text"
+                value={author}
+                onChange={(newValue) => handleInputChange(newValue, setAuthor)}
+                placeholder="Enter book author..."
+              />
             </div>
             <div className="form-field">
               <StatusSelect value={status} onChange={setStatus}/>
