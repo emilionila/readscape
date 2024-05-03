@@ -22,8 +22,10 @@ export const SignUpPage = () => {
     const [error, setError] = useState("");
 
     const handleSignUp = (email, password, repeatedPassword) => {
+        setError('');
+        setLoading(true);
         if (password === repeatedPassword) {
-            setError('');
+            setLoading(true);
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
@@ -32,16 +34,25 @@ export const SignUpPage = () => {
                 })
                 .catch((error) => {
                     if (error.code === 'auth/invalid-email') {
-                        setError('Invalid email')
+                        setError('Invalid email');
+                    } else {
+                        setError('An error occurred. Please try again later.');
                     }
                     console.log(error);
+                })
+                .finally(() => {
+                    setLoading(false);
                 });
         } else {
-            setError('Passwords do not match')
+            setError('Passwords do not match');
+            setLoading(true)
         }
+        setLoading(false)
     };
 
     const handleGoogleSignUp = () => {
+        setLoading(true);
+
         signInWithPopup(auth, provider)
             .then((result) => {
                 navigate("/inprogress");
@@ -99,6 +110,7 @@ export const SignUpPage = () => {
                 <CustomButton
                     type={"submit"}
                     title={"Continue"}
+                    loading={loading}
                     btnStyle="full"
                     onClick={() => handleSignUp(email, password, repeatedPassword)}
                 />
