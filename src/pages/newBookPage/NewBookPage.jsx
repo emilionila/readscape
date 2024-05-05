@@ -7,6 +7,9 @@ import './NewBookPage.scss';
 import { BackButton } from "../../components/backButton";
 import { firestore, storage } from '../../db/db'
 
+import { doc, setDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 const NewBookPage = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -23,21 +26,25 @@ const NewBookPage = () => {
     e.preventDefault();
 
     try {
+      console.log(coverImage)
+      const imageRef = ref(storage, `booksImages/${coverImage.name}`);
 
-      const storageRef = storage.ref();
-      const imageRef = storageRef.child(coverImage.name);
-      await imageRef.put(coverImage);
-      const imageUrl = await imageRef.getDownloadURL();
-
-      // Save book data (including cover image URL) to Firestore
-      await firestore.collection('books').add({
-        title,
-        author,
-        status,
-        description,
-        feedback,
-        imageUrl
+      
+      uploadBytes(imageRef, coverImage).then(() => {
+        console.log('Uploaded cover image');
       });
+    
+      const imageUrl = await getDownloadURL(imageRef);
+
+      await setDoc(doc(firestore, "books", title), 
+      {
+        title: title,
+        author: author,
+        status: status,
+        description: description,
+        feedback: feedback,
+        imageUrl: imageUrl
+      })
 
       setTitle('');
       setAuthor('');
@@ -50,7 +57,6 @@ const NewBookPage = () => {
       console.error('Error saving book data:', error.message);
     }
 
-    
   };
 
   return (
