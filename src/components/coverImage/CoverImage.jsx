@@ -9,15 +9,14 @@ const CoverImage = ({ onChange }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setPreviewUrl(event.target.result); // Set the preview URL for the image
-        onChange(event.target.result); // Pass the base64-encoded image data to parent component
+        setPreviewUrl(event.target.result);
+        onChange(file);
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleButtonClick = () => {
-    // Trigger file input when button is clicked
     document.getElementById('imageInput').click();
   };
 

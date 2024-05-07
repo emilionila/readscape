@@ -6,6 +6,8 @@ import {App} from "./App";
 import {LogInPage} from "./pages/LogInPage";
 import {WelcomePage} from "./pages/WelcomePage";
 import NewBookPage from './pages/newBookPage/NewBookPage';
+import {NotFound} from "./pages/NotFound";
+import {ProfileSettingsPage} from "./pages/profileSettingsPage";
 
 export const Root = () => {
     return (
@@ -17,7 +19,8 @@ export const Root = () => {
                     <Route path='login' element={<LogInPage/>}/>
                     <Route path='inprogress' element={<BooksInProgressPage/>}/>
                     <Route path='addbook' element={<NewBookPage/>}/>
-                    <Route path="*" element={<h1 className="title">Page not found</h1>}/>
+                    <Route path='profile' element={<ProfileSettingsPage/>}/>
+                    <Route path="*" element={<NotFound/>}/>
                 </Route>
             </Routes>
         </Router>

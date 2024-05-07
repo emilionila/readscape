@@ -1,6 +1,7 @@
 @import "src/assets/main";
 
 .button {
+  position: relative;
   padding: 13px 109px;
   width: 90%;
   border-radius: 50px;
@@ -33,6 +34,17 @@
   color: $primary;
   background-color: transparent;
   border-color: $primary;
+}
+
+.danger {
+  color: $accent;
+  background-color: $secondary;
+  border-color: $secondary;
+  &:hover{
+    color: $secondary;
+    background-color: $accent;
+    border-color: transparent;
+  }
 }
 
 

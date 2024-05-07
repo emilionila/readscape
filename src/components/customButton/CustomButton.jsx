@@ -1,4 +1,5 @@
 import styles from './CustomButton.module.scss';
+import {Loader} from "../loader";
 
 export const CustomButton = (props) => {
     const {
@@ -7,10 +8,10 @@ export const CustomButton = (props) => {
         disabled,
         onClick,
         btnStyle,
-        // loading
+        loading
     } = props;
 
-    const buttonClassName = btnStyle === 'empty' ? styles.empty : styles.full;
+    const buttonClassName = btnStyle === 'empty' ? styles.empty : btnStyle === 'danger' ? styles.danger : styles.full;
 
     return (
         <button
@@ -20,6 +21,9 @@ export const CustomButton = (props) => {
             className={`${styles.button} ${buttonClassName}`}
         >
             {title}
+            {loading && (
+                <Loader />
+            )}
         </button>
     );
 };

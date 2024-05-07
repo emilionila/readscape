@@ -2,6 +2,7 @@ import {CustomButton} from "../../components/customButton";
 import styles from "./WelcomePage.module.scss";
 import WelcomeImage from "../../images/welcome.svg";
 import {useNavigate} from "react-router-dom";
+import {Loader} from "../../components/loader";
 
 export const WelcomePage = () => {
     let navigate = useNavigate();
