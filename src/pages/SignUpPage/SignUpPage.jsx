@@ -6,7 +6,7 @@ import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWith
 import {firebaseConfig, firestore} from "../../db/db";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc } from "firebase/firestore";
 
 const auth = getAuth(firebaseConfig);
 
@@ -18,24 +18,34 @@ export const SignUpPage = () => {
     const [password, setPassword] = useState("");
     const [repeatedPassword, setRepeatedPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("")
+    const [error, setError] = useState("");
 
     const handleSignUp = async (email, password, repeatedPassword) => {
         setError('');
         setLoading(true);
+        let userDocRef;
+
         if (password === repeatedPassword) {
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const docRef = await addDoc(collection(firestore, "users"), {
+                userDocRef = await addDoc(collection(firestore, "users"), {
                     name: email,
                     surname: '',
                     email: email,
                     uid: userCredential.user.uid,
                     accessToken: userCredential.user.stsTokenManager.accessToken,
                     createdAt: userCredential.user.reloadUserInfo.createdAt,
+                    id: '',
                 });
-                console.log("Document written with ID: ", docRef.id);
+
+                await updateDoc(userDocRef, {
+                    id: userDocRef.id,
+                });
+
+                console.log("Document written with ID: ", userDocRef.id);
+
                 const user = userCredential.user;
+
                 console.log(user);
                 navigate("/inprogress");
             } catch (error) {
@@ -44,7 +54,7 @@ export const SignUpPage = () => {
                 } else {
                     setError('An error occurred. Please try again later.');
                 }
-                console.log(error);
+                console.error(error);
             } finally {
                 setLoading(false);
             }

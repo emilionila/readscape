@@ -15,7 +15,7 @@ export const BooksInProgressPage = () => {
         <div>
             <Header />
             <SearchBar />
-            <ReadingList userId={user ? user.uid : null} />
+            <ReadingList userId={user ? user.firestoreUserId : null} />
             <AddingButton />
             <Footer />
         </div>
