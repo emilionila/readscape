@@ -4,10 +4,12 @@ import CoverImageInput from '../../components/coverImage/CoverImage';
 import TextAreaInput from '../../components/textInput/TextInput';
 import './NewBookPage.scss';
 import { BackButton } from "../../components/backButton";
-import TitleInput from "../../components/titleInput/TitleInput";
-import { firestore } from "../../db/db";
+import ShortInput from '../../components/shortInput/ShortInput';
+import { firestore, storage } from "../../db/db";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import useAuth from "../../db/user";
+
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const NewBookPage = () => {
   const [title, setTitle] = useState('');
@@ -20,10 +22,22 @@ const NewBookPage = () => {
   const [imageUrl, setImageUrl] = useState('');
   const user = useAuth();
 
+  const handleInputChange = (newValue, setter) => {
+    setter(newValue);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      const imageRef = ref(storage, `booksImages/${coverImage.name}`);
+
+      await uploadBytes(imageRef, coverImage).then(() => {
+        console.log('Uploaded cover image');
+      });
+
+      const imageUrl = await getDownloadURL(imageRef);
+
       const bookRef = await addDoc(collection(firestore, "books"), {
         title: title,
         status: status,
@@ -68,7 +82,22 @@ const NewBookPage = () => {
               <CoverImageInput onChange={setCoverImage} imageUrl={imageUrl} onChangeUrl={setImageUrl} />
             </div>
             <div className="form-field">
-              <TitleInput value={title} onChange={setTitle} />
+              <ShortInput
+                label="Title"
+                type="text"
+                value={title}
+                onChange={(newValue) => handleInputChange(newValue, setTitle)}
+                placeholder="Enter book title..."
+              />
+            </div>
+            <div className="form-field">
+              <ShortInput
+                label="Author"
+                type="text"
+                value={author}
+                onChange={(newValue) => handleInputChange(newValue, setAuthor)}
+                placeholder="Enter book author..."
+              />
             </div>
             <div className="form-field">
               <StatusSelect value={status} onChange={setStatus} />
