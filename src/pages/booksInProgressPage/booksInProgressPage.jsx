@@ -6,6 +6,7 @@ import SearchBar from '../../components/searchBar/searchBar';
 import AddingButton from '../../components/addingButton/addingButton';
 import ReadingList from '../../components/readingList/readingList';
 import useAuth from "../../db/user";
+import Filter from '../../components/filter/filter';
 
 
 export const BooksInProgressPage = () => {

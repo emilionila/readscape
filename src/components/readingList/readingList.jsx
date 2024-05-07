@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './readingList.scss'
+import './readingList.scss';
 import ReadingListItem from '../readingListItem/readingListItem';
 import noBooksImage from '../../images/noBooks.png';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -12,11 +12,13 @@ const ReadingList = ({ userId }) => {
   useEffect(() => {
     const fetchUserReadingList = async () => {
       try {
-        const q = query(collection(firestore, 'usersBooks'), where('userId', '==', userId));
+        const q = query(
+          collection(firestore, `users/${userId}/userBooks`)
+        );
         const querySnapshot = await getDocs(q);
         const userBooks = [];
         querySnapshot.forEach((doc) => {
-          userBooks.push(doc.data().bookId);
+          userBooks.push({ id: doc.id, ...doc.data() });
         });
         setUserReadingList(userBooks);
         setLoading(false);
@@ -24,6 +26,7 @@ const ReadingList = ({ userId }) => {
         console.error('Error fetching user reading list:', error);
       }
     };
+    
 
     fetchUserReadingList();
   }, [userId]);
@@ -44,14 +47,14 @@ const ReadingList = ({ userId }) => {
   return (
     <div className="readingList__container">
       <ul className="readingList" style={{ listStyleType: 'none' }}>
-        {userReadingList.map((bookId) => (
-          <li key={bookId} className="readingList__item">
-            <ReadingListItem bookId={bookId} />
+        {userReadingList.map((book) => (
+          <li key={book.id} className="readingList__item">
+            <ReadingListItem bookId={book.id} />
           </li>
         ))}
       </ul>
     </div>
   );
-}
+};
 
 export default ReadingList;
