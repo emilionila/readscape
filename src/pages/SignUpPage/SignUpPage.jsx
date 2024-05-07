@@ -3,9 +3,10 @@ import styles from "./SignUpPage.module.scss";
 import SignUpImage from "../../images/signup.svg";
 import { CustomButton } from "../../components/customButton";
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { firebaseConfig } from "../../db/db";
+import {firebaseConfig, firestore} from "../../db/db";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { collection, addDoc } from "firebase/firestore";
 
 const auth = getAuth(firebaseConfig);
 
@@ -13,65 +14,70 @@ export const SignUpPage = () => {
     const navigate = useNavigate();
     const provider = new GoogleAuthProvider();
 
-    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatedPassword, setRepeatedPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+    const [error, setError] = useState("")
 
-    const handleSignUp = (email, password, repeatedPassword) => {
+    const handleSignUp = async (email, password, repeatedPassword) => {
         setError('');
         setLoading(true);
         if (password === repeatedPassword) {
-            setLoading(true);
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    console.log(user);
-                    navigate("/inprogress");
-                })
-                .catch((error) => {
-                    if (error.code === 'auth/invalid-email') {
-                        setError('Invalid email');
-                    } else {
-                        setError('An error occurred. Please try again later.');
-                    }
-                    console.log(error);
-                })
-                .finally(() => {
-                    setLoading(false);
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const docRef = await addDoc(collection(firestore, "users"), {
+                    name: email,
+                    surname: '',
+                    email: email,
+                    uid: userCredential.user.uid,
+                    accessToken: userCredential.user.stsTokenManager.accessToken,
+                    createdAt: userCredential.user.reloadUserInfo.createdAt,
                 });
+                console.log("Document written with ID: ", docRef.id);
+                const user = userCredential.user;
+                console.log(user);
+                navigate("/inprogress");
+            } catch (error) {
+                if (error.code === 'auth/invalid-email') {
+                    setError('Invalid email');
+                } else {
+                    setError('An error occurred. Please try again later.');
+                }
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
         } else {
             setError('Passwords do not match');
-            setLoading(true)
+            setLoading(false);
         }
-        setLoading(false)
     };
 
-    const handleGoogleSignUp = () => {
+    const handleGoogleSignUp = async () => {
         setLoading(true);
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            const user = result.user;
 
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                navigate("/inprogress");
+            const docRef = await addDoc(collection(firestore, "users"), {
+                name: user.displayName,
+                email: user.email,
+                uid: user.uid,
+                accessToken: token,
+            });
+            console.log("Document written with ID: ", docRef.id);
 
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                console.log(token, 'userGoogleToken')
-                const user = result.user;
-                console.log(user, 'user')
-            }).catch((error) => {
-            console.log(error)
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = GoogleAuthProvider.credentialFromError(error);
-
-        });
-    }
-
+            navigate("/inprogress");
+        } catch (error) {
+            console.log(error);
+            setError("An error occurred while signing up with Google. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <>
             <BackButton />
