@@ -36,6 +36,17 @@
   border-color: $primary;
 }
 
+.danger {
+  color: $accent;
+  background-color: $secondary;
+  border-color: $secondary;
+  &:hover{
+    color: $secondary;
+    background-color: $accent;
+    border-color: transparent;
+  }
+}
+
 
 @media (min-width: 589px) {
   .button {

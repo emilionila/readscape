@@ -11,7 +11,7 @@ export const CustomButton = (props) => {
         loading
     } = props;
 
-    const buttonClassName = btnStyle === 'empty' ? styles.empty : styles.full;
+    const buttonClassName = btnStyle === 'empty' ? styles.empty : btnStyle === 'danger' ? styles.danger : styles.full;
 
     return (
         <button
