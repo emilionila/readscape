@@ -1,0 +1,38 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profileSettingsContainer {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px
+
+}
+
+.profilePicture {
+  width: 100px;
+  height: 100px;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.profileUsername {
+  display: flex;
+  justify-content: center;
+}
+
+.profileButton {
+  width: 100%;
+}
