@@ -1,98 +1,83 @@
 import React, { useState } from 'react';
-import ShortInput from '../../components/shortInput/ShortInput';
 import StatusSelect from '../../components/statusSelect/StatusSelect';
 import CoverImageInput from '../../components/coverImage/CoverImage';
 import TextAreaInput from '../../components/textInput/TextInput';
 import './NewBookPage.scss';
 import { BackButton } from "../../components/backButton";
-import { firestore, storage } from '../../db/db'
-
-import { doc, setDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import TitleInput from "../../components/titleInput/TitleInput";
+import { firestore } from "../../db/db";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import useAuth from "../../db/user";
 
 const NewBookPage = () => {
   const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
+  const [author, setAuthor] = useState('')
   const [status, setStatus] = useState('reading');
   const [description, setDescription] = useState('');
   const [feedback, setFeedback] = useState('');
+  const [pages, setPages] = useState(0);
   const [coverImage, setCoverImage] = useState(null);
-
-  const handleInputChange = (newValue, setter) => {
-    setter(newValue);
-  };
+  const [imageUrl, setImageUrl] = useState('');
+  const user = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      console.log(coverImage)
-      const imageRef = ref(storage, `booksImages/${coverImage.name}`);
-
-      uploadBytes(imageRef, coverImage).then(() => {
-        console.log('Uploaded cover image');
-      });
-    
-      const imageUrl = await getDownloadURL(imageRef);
-
-      await setDoc(doc(firestore, "books", title), 
-      {
+      const bookRef = await addDoc(collection(firestore, "books"), {
         title: title,
-        author: author,
         status: status,
         description: description,
         feedback: feedback,
-        imageUrl: imageUrl
-      })
+        author: author,
+        pages: pages,
+        imageURL: imageUrl,
+      });
+      console.log("Book added with ID: ", bookRef.id);
+
+      const userBooksRef = doc(firestore, "users", user.firestoreUserId, "userBooks", bookRef.id);
+      await setDoc(userBooksRef, {
+        title: title,
+        status: status,
+        description: description,
+        feedback: feedback,
+        author: author,
+        pages: pages,
+        imageURL: imageUrl,
+      });
+      console.log("Book added to user's collection");
 
       setTitle('');
-      setAuthor('');
       setStatus('reading');
       setDescription('');
       setFeedback('');
       setCoverImage(null);
-
+      setImageUrl('');
     } catch (error) {
-      console.error('Error saving book data:', error.message);
+      console.error("Error adding book: ", error);
     }
-
   };
 
   return (
       <>
-        <BackButton/>
+        <BackButton />
         <div className="book-form-container">
           <h2 className="book-form-title">Add New Book</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-field">
-              <CoverImageInput onChange={setCoverImage}/>
+              <CoverImageInput onChange={setCoverImage} imageUrl={imageUrl} onChangeUrl={setImageUrl} />
             </div>
             <div className="form-field">
-              <ShortInput
-                label="Title"
-                type="text"
-                value={title}
-                onChange={(newValue) => handleInputChange(newValue, setTitle)}
-                placeholder="Enter book title..."
-              />
+              <TitleInput value={title} onChange={setTitle} />
             </div>
             <div className="form-field">
-              <ShortInput
-                label="Author"
-                type="text"
-                value={author}
-                onChange={(newValue) => handleInputChange(newValue, setAuthor)}
-                placeholder="Enter book author..."
-              />
+              <StatusSelect value={status} onChange={setStatus} />
             </div>
             <div className="form-field">
-              <StatusSelect value={status} onChange={setStatus}/>
+              <TextAreaInput label="Description/Note" value={description} onChange={setDescription} />
             </div>
             <div className="form-field">
-              <TextAreaInput label="Description/Note" value={description} onChange={setDescription}/>
-            </div>
-            <div className="form-field">
-              <TextAreaInput label="Feedback" value={feedback} onChange={setFeedback}/>
+              <TextAreaInput label="Feedback" value={feedback} onChange={setFeedback} />
             </div>
             <button className='save-button' type="submit">Add Book</button>
           </form>
