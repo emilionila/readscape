@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import './header.scss';
 import { NotificationIcon, ProfileIcon } from '../../assets/icons';
 import useAuth from "../../db/user";
@@ -6,6 +7,8 @@ import useAuth from "../../db/user";
 const Header = () => {
     const user = useAuth();
 
+    const navigate = useNavigate();
+    
     const [userName, setUserName] = useState('');
     useEffect(() => {
         if (user) {
@@ -43,9 +46,9 @@ const Header = () => {
                 <div className="header__button">
                     <NotificationIcon width="24px" height="24px" />
                 </div>
-                <div className="header__button">
+                <button className="header__button" onClick={() => navigate('/profile')}>
                     <ProfileIcon width="24px" height="24px" />
-                </div>
+                </button>
             </div>
         </header>
     );

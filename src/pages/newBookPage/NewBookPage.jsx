@@ -29,7 +29,6 @@ const NewBookPage = () => {
       console.log(coverImage)
       const imageRef = ref(storage, `booksImages/${coverImage.name}`);
 
-      
       uploadBytes(imageRef, coverImage).then(() => {
         console.log('Uploaded cover image');
       });

@@ -1,7 +1,7 @@
 import React from 'react';
 import './ShortInput.scss';
 
-const ShortInput = ({ label, type, value, onChange, placeholder }) => {
+export const ShortInput = ({ label, type, value, onChange, placeholder }) => {
   const handleInputChange = (e) => {
     onChange(e.target.value);
   };
