@@ -8,6 +8,7 @@ import ShortInput from '../../components/shortInput/ShortInput';
 import { firestore, storage } from "../../db/db";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import useAuth from "../../db/user";
+import TitleInput from "../../components/titleInput/TitleInput";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
