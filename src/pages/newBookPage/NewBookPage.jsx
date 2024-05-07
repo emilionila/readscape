@@ -4,10 +4,10 @@ import CoverImageInput from '../../components/coverImage/CoverImage';
 import TextAreaInput from '../../components/textInput/TextInput';
 import './NewBookPage.scss';
 import { BackButton } from "../../components/backButton";
-import TitleInput from "../../components/titleInput/TitleInput";
 import { firestore } from "../../db/db";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import useAuth from "../../db/user";
+import TitleInput from "../../components/titleInput/TitleInput";
 
 const NewBookPage = () => {
   const [title, setTitle] = useState('');
