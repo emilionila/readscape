@@ -24,8 +24,8 @@ const Footer = () => {
   return (
     <footer className={isKeyboardOpen ? 'footer keyboard-open' : 'footer'}>
       <div className="footer__container">
-        <Link to="/inProgress" className={location.pathname === '/inProgress' ? 'footer__button active' : 'footer__button'}>
-          <BookIcon width="30px" height="30px" color={location.pathname === '/inProgress' ? '#ffffff' : '#000000'}/>
+        <Link to="/inprogress" className={location.pathname === '/inprogress' ? 'footer__button active' : 'footer__button'}>
+          <BookIcon width="30px" height="30px" color={location.pathname === '/inprogress' ? '#ffffff' : '#000000'}/>
           <span>Library</span>
         </Link>
         <Link to="/search" className={location.pathname === '/search' ? 'footer__button active' : 'footer__button'}>
