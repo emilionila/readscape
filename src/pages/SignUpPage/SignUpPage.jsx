@@ -29,8 +29,7 @@ export const SignUpPage = () => {
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 userDocRef = await addDoc(collection(firestore, "users"), {
-                    name: email,
-                    surname: '',
+                    username: email,
                     email: email,
                     uid: userCredential.user.uid,
                     accessToken: userCredential.user.stsTokenManager.accessToken,
@@ -72,19 +71,23 @@ export const SignUpPage = () => {
             const token = credential.accessToken;
             const user = result.user;
 
-            const docRef = await addDoc(collection(firestore, "users"), {
-                name: user.displayName,
+            const userDocRef = await addDoc(collection(firestore, "users"), {
+                username: user.email,
                 email: user.email,
                 uid: user.uid,
                 accessToken: token,
+                createdAt: user.metadata.createdAt,
+                id:'',
             });
-            console.log("Document written with ID: ", docRef.id);
 
-            navigate("/inprogress");
+            await updateDoc(userDocRef, {
+                id: userDocRef.id,
+            });
         } catch (error) {
             console.log(error);
             setError("An error occurred while signing up with Google. Please try again later.");
         } finally {
+            navigate("/inprogress");
             setLoading(false);
         }
     };

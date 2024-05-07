@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
 import { firebaseConfig } from "./db";
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { firestore } from './db';
 
-const auth = getAuth(firebaseConfig);
+export const auth = getAuth(firebaseConfig);
 
 const useAuth = () => {
     const [user, setUser] = useState(null);
@@ -33,5 +33,7 @@ const useAuth = () => {
 
     return user;
 };
+
+
 
 export default useAuth;

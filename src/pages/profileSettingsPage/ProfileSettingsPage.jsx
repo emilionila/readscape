@@ -1,157 +1,152 @@
-import React, { useEffect, useState } from 'react';
-import { ProfileIcon } from '../../assets/icons';
-import { ShortInput } from '../../components/shortInput';
-import { CustomButton } from '../../components/customButton';
-import { BackButton } from '../../components/backButton';
-import useAuth from '../../db/user';
-import { firestore } from '../../db/db';
-
-import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { getAuth, deleteUser } from 'firebase/auth';
+import React, {useEffect, useState} from 'react';
+import ProfileIcon from '../../images/userIcon.svg';
+import {ShortInput} from '../../components/shortInput';
+import {CustomButton} from '../../components/customButton';
+import {BackButton} from '../../components/backButton';
+import useAuth, {auth} from '../../db/user';
+import {firestore} from '../../db/db';
+import styles from './ProfileSettingsPage.module.scss';
+import {deleteDoc, doc, getDoc, updateDoc} from 'firebase/firestore';
+import {getAuth, deleteUser, signOut, EmailAuthProvider, reauthenticateWithCredential} from 'firebase/auth';
+import {useNavigate} from "react-router-dom";
 
 export const ProfileSettingsPage = () => {
-  const user = useAuth();
+    const user = useAuth();
+    const navigate = useNavigate();
 
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  useEffect(() => {
-    const getUserData = async () => {
-      if (user) {
-        const docRef = doc(firestore, 'users', user.uid)
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()){
-          setName(docSnap.get('name'))
-          setSurname(docSnap.get('surname'))
+    const [username, setUsername] = useState('');
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        const getUserData = async () => {
+            if (user) {
+                const docRef = doc(firestore, 'users', user.uid)
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    setUsername(docSnap.get('username'))
+                }
+            }
         }
-      }
-    }
 
-    getUserData();
-  }, [user]);
+        getUserData();
+    }, [user]);
 
-  const [isEditing, setIsEditing] = useState(false);
-  
-  const handleInputChange = (newValue, setter) => {
-    setter(newValue);
-  };
+    const handleEditClick = () => {
+        const getUserData = async () => {
+            if (user) {
+                const docRef = doc(firestore, 'users', user.uid)
+                const docSnap = await getDoc(docRef);
+                console.log(docSnap.get("name"))
+            } else {
+                console.log("no user")
+            }
+        }
 
-  const handleEditClick = () => {
-    const getUserData = async () => {
-      if (user) {
-        const docRef = doc(firestore, 'users', user.uid)
-        const docSnap = await getDoc(docRef);
-        console.log(docSnap.get("name"))
-      }
-      else{
-        console.log("no user")
-      }
-    }
+        getUserData();
+        setIsEditing(true);
+    };
 
-    getUserData();
-    setIsEditing(true);
-  };
-
-  const handleSaveClick = () => {
-    setIsEditing(false);
-      
     const updateUserData = async () => {
-      if (user) {
-        console.log(user.email);
-        const docRef = doc(firestore, 'users', user.uid)
-        if (docRef.exists){
-          console.log("exsist");
-          await updateDoc(docRef, {
-            name: name,
-            surname: surname
-          })
-          console.log('Profile updated:', { name, surname });
-        }
-        else {
-          console.log("not exist")
-        }
-      }
-    }
-  
-    updateUserData();
-  };
-
-  const handleLogout = () => {
-    
-  }
-
-  const handleDeleteAccount = () => {
-    const currentUser = getAuth().currentUser;
-    console.log(currentUser);
-    deleteUser(currentUser)
-    .then(() => {
-      const updateUserData = async () => {
         if (user) {
-          const docRef = doc(firestore, 'users', user.uid)
-          await deleteDoc(docRef);
+            console.log(user.email);
+            const docRef = await doc(firestore, 'users', user.firestoreUserId)
+            await updateDoc(docRef, {
+                username: username,
+            })
+
         }
-      }
+    }
 
-      updateUserData();
-      console.log("deleted")
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
-  };
+    const handleSaveClick = async () => {
+        setIsEditing(false);
+        await updateUserData();
+    };
 
-  return (
-    <>
-      <BackButton />
-      <div className="profile-settings-container">
-        <div className="profile-picture">
-          <ProfileIcon width="140px" height="140px"/>
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            navigate("/");
+        } catch (error) {
+            console.error('Error signing out:', error);
+        }
+    };
+
+    const handleDeleteAccount = async (user) => {
+        const currentUser = getAuth().currentUser;
+        const password = prompt('Please enter your password to confirm account deletion:');
+        const credential = EmailAuthProvider.credential(currentUser.email, password);
+
+        try {
+            await reauthenticateWithCredential(currentUser, credential);
+
+            await deleteUser(currentUser);
+
+            if (user) {
+                const docRef = doc(firestore, 'users', user.firestoreUserId);
+                await deleteDoc(docRef);
+            }
+
+        } catch (error) {
+            console.error("Error deleting account:", error);
+        }
+    };
+
+    return (
+        <div className={styles.container}>
+            <BackButton/>
+            <div className={styles.profileSettingsContainer}>
+                <img
+                    src={ProfileIcon}
+                    alt="user icon"
+                    className={styles.profilePicture}
+                />
+                <div className={styles.profileInfo}>
+                    {isEditing ? (
+                        <ShortInput
+                            label={"Username"}
+                            type={"text"}
+                            value={username}
+                            onChange={(newValue) => setUsername(newValue)}
+                            placeholder={"Type your username..."}
+                        />
+                    ) : (
+                        <div className={styles.profileUsername}>{username}</div>
+                    )}
+                    {isEditing ? (
+                            <CustomButton
+                                title={"Save Changes"}
+                                type={"button"}
+                                disabled={false}
+                                onClick={handleSaveClick}
+                                loading={false}
+                            />
+                    ) : (
+                        <CustomButton
+                            title={"Edit"}
+                            type={"button"}
+                            disabled={false}
+                            onClick={handleEditClick}
+                            loading={false}
+                        />
+                    )}
+                    <CustomButton
+                        title={"Log Out"}
+                        type={"button"}
+                        disabled={false}
+                        onClick={handleLogout}
+                        btnStyle={"empty"}
+                        loading={false}
+                    />
+                    <CustomButton
+                        title={"Delete  Account"}
+                        type={"button"}
+                        disabled={false}
+                        onClick={handleDeleteAccount}
+                        btnStyle={"danger"}
+                        loading={false}
+                    />
+                </div>
+            </div>
         </div>
-        <div className="profile-info">
-          {isEditing ? (
-            <>
-              <ShortInput 
-                label={"Name"}
-                type={"text"}
-                value={name}
-                onChange={(newValue) => handleInputChange(newValue, setName)}
-                placeholder={"Type name..."}
-              />
-              <ShortInput 
-                label={"Surname"}
-                type={"text"}
-                value={surname}
-                onChange={(newValue) => handleInputChange(newValue, setSurname)}
-                placeholder={"Type surname..."}
-              />
-            </>
-          ) : (
-            <>
-              <div>{name}</div>
-              <div>{surname}</div>
-            </>
-          )} 
-          {isEditing ? (
-            <button onClick={handleSaveClick}>Save Changes</button>
-          ) : (
-            <button onClick={handleEditClick}>Edit</button>
-          )}
-          <CustomButton
-            title={"Logout"}
-            type={"button"}
-            disabled={false}
-            onClick={handleLogout}
-            loading={false}
-          />
-          <CustomButton
-            title={"Delete This Account"}
-            type={"button"}
-            disabled={false}
-            onClick={handleDeleteAccount}
-            btnStyle={"danger"}
-            loading={false}
-          />
-        </div>
-      </div>
-    </>
-  );
+    );
 };
