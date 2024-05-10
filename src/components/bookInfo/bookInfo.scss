@@ -1,0 +1,33 @@
+.BookInfoForm {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 50px 100px 50px 100px;
+
+    &__image {
+        width: 30%;
+        margin-right: 20px;
+    }
+
+    &__details {
+        flex: 1;
+    }
+
+    &__description {
+        margin-top: 20px;
+
+        h3 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './booksInProgressPage.scss';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -8,15 +8,24 @@ import ReadingList from '../../components/readingList/readingList';
 import useAuth from "../../db/user";
 import Filter from '../../components/filter/filter';
 
-
 export const BooksInProgressPage = () => {
     const user = useAuth();
+    const [filters, setFilters] = useState({
+        finished: false,
+        reading: false,
+        goingToRead: false,
+    });
+
+    const handleFilterChange = (newFilters) => {
+        setFilters(newFilters);
+    };
 
     return (
         <div>
             <Header />
             <SearchBar />
-            <ReadingList userId={user ? user.firestoreUserId : null} />
+            <Filter handleFilterChange={handleFilterChange} />
+            <ReadingList userId={user ? user.firestoreUserId : null} filters={filters} />
             <AddingButton />
             <Footer />
         </div>

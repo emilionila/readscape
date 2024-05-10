@@ -28,4 +28,32 @@
       color: #333;
     }
   }
+
+@media (min-width: 1366px) {
+  .readingList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+  }
   
+  .readingList__item {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 1365px) {
+  .readingList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .readingList__item {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
