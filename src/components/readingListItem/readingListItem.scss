@@ -14,8 +14,8 @@
   }
 
   &__image {
-    width: 25%;
-    height: 25%;
+    width: auto;
+    height: 21vh;
     margin-right: 10px;
     border-radius: 5px;
   }
@@ -43,6 +43,19 @@
     color: #6EAA89;
     border-radius: 8px;
     border: none;
-    width: 80%;
+    width: 20vw;
+  }
+}
+
+@media (min-width: 1281px) {
+  .readingListItem{
+    &__image {
+      width: auto;
+      height: 18vh;
+    }
+
+    &__button{
+      width: 10vw;
+    }
   }
 }

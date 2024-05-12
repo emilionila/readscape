@@ -8,6 +8,7 @@ import {WelcomePage} from "./pages/WelcomePage";
 import NewBookPage from './pages/newBookPage/NewBookPage';
 import {NotFound} from "./pages/NotFound";
 import {ProfileSettingsPage} from "./pages/profileSettingsPage";
+import {BookPage} from "./pages/bookPage"
 import useAuth from "./db/user";
 
 export const Root = () => {
@@ -26,6 +27,7 @@ export const Root = () => {
                             <Route path="addbook" element={<NewBookPage/>}/>
                             <Route path="profile" element={<ProfileSettingsPage/>}/>
                             <Route path="*" element={<NotFound/>}/>
+                            <Route path="/books/:bookId" element={<BookPage/>}/>
                         </>
                     )}
                 </Route>

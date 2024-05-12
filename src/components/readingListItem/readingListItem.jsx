@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './readingListItem.scss';
 import { firestore, storage } from '../../db/db';
 import { doc, getDoc } from 'firebase/firestore';
@@ -7,7 +8,7 @@ import { ref, getDownloadURL } from 'firebase/storage';
 const ReadingListItem = ({ bookId }) => {
   const [book, setBook] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -29,20 +30,28 @@ const ReadingListItem = ({ bookId }) => {
   
     fetchBook();
   }, [bookId]);
-  
+
+  const handleItemClick = () => {
+    navigate(`/books/${bookId}`);
+  };
+
+  const handleInProgressClick = (e) => {
+    console.log("Button 'In Progress' clicked");
+    e.stopPropagation();
+  };
 
   if (!book || !imageUrl) {
     return <p>Loading...</p>;
   }
 
   return (
-    <div className="readingListItem">
+    <div className="readingListItem" onClick={handleItemClick}>
       <div className="readingListItem__content">
         <img src={imageUrl} className="readingListItem__image" alt="Book cover" />
         <div className="readingListItem__details">
           <h3 className="readingListItem__title">{book.title}</h3>
           <p className="readingListItem__author">{book.author}</p>
-          <button className="readingListItem__button">In Progress</button>
+          <button className="readingListItem__button" onClick={handleInProgressClick} >In Progress</button>
         </div>
       </div>
     </div>
