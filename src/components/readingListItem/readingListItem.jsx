@@ -36,6 +36,7 @@ const ReadingListItem = ({ bookId, userId }) => {
   };
   
 
+
   const handleItemClick = () => {
     navigate(`/books/${bookId}`);
   };
