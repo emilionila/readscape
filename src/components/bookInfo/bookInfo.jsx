@@ -8,6 +8,7 @@ const BookInfo = ({ bookId }) => {
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
     const [imageUrl, setImageUrl] = useState(null);
+    const [showCopySuccess, setShowCopySuccess] = useState(false);
 
     useEffect(() => {
         const fetchBookInfo = async () => {
@@ -36,6 +37,20 @@ const BookInfo = ({ bookId }) => {
         fetchBookInfo();
     }, [bookId]);
 
+    const handleShare = async () => {
+        const bookUrl = window.location.href;
+        try {
+            await navigator.clipboard.writeText(bookUrl);
+            setShowCopySuccess(true);
+            setTimeout(() => {
+                setShowCopySuccess(false);
+            }, 3000);
+        } catch (err) {
+            console.error('Failed to copy!', err);
+        }
+    };
+    
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -60,6 +75,8 @@ const BookInfo = ({ bookId }) => {
                     <h3>Book Description</h3>
                     <p>{book.description}</p>
                 </div>
+                <button onClick={handleShare} className="BookInfoForm__shareBtn">Share</button>
+                {showCopySuccess && <div className="copy-success show">Book link copied</div>}
             </div>
         </div>
     );
