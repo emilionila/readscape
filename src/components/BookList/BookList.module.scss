@@ -1,0 +1,14 @@
+.container {
+ padding: 20px;
+}
+
+.bookList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  list-style: none;
+}

@@ -27,7 +27,7 @@ const ReadingListItem = ({ bookId }) => {
         console.error('Error fetching book:', error);
       }
     };
-  
+
     fetchBook();
   }, [bookId]);
 
@@ -51,7 +51,7 @@ const ReadingListItem = ({ bookId }) => {
         <div className="readingListItem__details">
           <h3 className="readingListItem__title">{book.title}</h3>
           <p className="readingListItem__author">{book.author}</p>
-          <button className="readingListItem__button" onClick={handleInProgressClick} >In Progress</button>
+          <button className="readingListItem__button" onClick={handleInProgressClick} >{book.status}</button>
         </div>
       </div>
     </div>
