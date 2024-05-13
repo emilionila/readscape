@@ -23,9 +23,9 @@ const ReadingList = ({ userId, filters }) => {
                 let filteredBooks = userBooks;
                 if (filters.finished || filters.reading || filters.goingToRead) {
                     filteredBooks = userBooks.filter(book => {
-                        if (filters.finished && book.status === 'finished') return true;
-                        if (filters.reading && book.status === 'reading') return true;
-                        if (filters.goingToRead && book.status === 'goingToRead') return true;
+                        if (filters.finished && book.status === 'Finished') return true;
+                        if (filters.reading && book.status === 'Reading') return true;
+                        if (filters.goingToRead && book.status === 'Going To Read') return true;
                         return false;
                     });
                 }
@@ -58,7 +58,7 @@ const ReadingList = ({ userId, filters }) => {
             <ul className="readingList" style={{ listStyleType: 'none' }}>
                 {userReadingList.map((book) => (
                     <li key={book.id} className="readingList__item">
-                        <ReadingListItem bookId={book.id} />
+                        <ReadingListItem bookId={book.id} userId={userId} />
                     </li>
                 ))}
             </ul>
