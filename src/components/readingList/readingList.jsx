@@ -4,9 +4,10 @@ import { firestore } from '../../db/db';
 import './readingList.scss';
 import ReadingListItem from '../readingListItem/readingListItem';
 import noBooksImage from '../../images/noBooks.png';
+import NoBooksImg from "../../images/Empty.svg";
 
 
-const ReadingList = ({ userId, filters }) => {
+const ReadingList = ({ userId, filters, searchQuery }) => {
     const [userReadingList, setUserReadingList] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -53,15 +54,26 @@ const ReadingList = ({ userId, filters }) => {
         );
     }
 
+    const filteredBooks = userReadingList.filter(book => book.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+
     return (
         <div className="readingList__container">
+            {filteredBooks.length === 0 ? (
+                <img
+                    src={NoBooksImg}
+                    alt="login image"
+                    className='noBooksImg'
+                />
+            ) : (
             <ul className="readingList" style={{ listStyleType: 'none' }}>
-                {userReadingList.map((book) => (
+                {filteredBooks.map((book) => (
                     <li key={book.id} className="readingList__item">
                         <ReadingListItem bookId={book.id} />
                     </li>
                 ))}
             </ul>
+                )}
         </div>
     );
 };

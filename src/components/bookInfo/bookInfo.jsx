@@ -58,7 +58,7 @@ const BookInfo = ({ bookId }) => {
                 <p>Number of Pages: {book.pages}</p>
                 <div className="BookInfoForm__description">
                     <h3>Book Description</h3>
-                    <p></p>
+                    <p>{book.description}</p>
                 </div>
             </div>
         </div>

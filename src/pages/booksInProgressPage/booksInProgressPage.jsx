@@ -15,6 +15,8 @@ export const BooksInProgressPage = () => {
         reading: false,
         goingToRead: false,
     });
+    const [searchQuery, setSearchQuery] = useState('');
+
 
     const handleFilterChange = (newFilters) => {
         setFilters(newFilters);
@@ -23,9 +25,13 @@ export const BooksInProgressPage = () => {
     return (
         <div>
             <Header />
-            <SearchBar />
+            <SearchBar onSearch={(query) => setSearchQuery(query)} />
             <Filter handleFilterChange={handleFilterChange} />
-            <ReadingList userId={user ? user.firestoreUserId : null} filters={filters} />
+            <ReadingList
+                userId={user ? user.firestoreUserId : null}
+                filters={filters}
+                searchQuery={searchQuery}
+            />
             <AddingButton />
             <Footer />
         </div>

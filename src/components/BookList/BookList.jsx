@@ -3,7 +3,9 @@ import { firestore } from '../../db/db';
 import { collection, query, getDocs } from 'firebase/firestore';
 import { Loader } from "../loader";
 import {BookCardItem} from "../BookCardItem"
-import styles from './BookList.module.scss'
+import styles from './BookList.module.scss';
+import NoBooksImg from "../../images/Empty.svg";
+
 
 export const BookList = ({ searchQuery }) => {
     const [loading, setLoading] = useState(true);
@@ -34,7 +36,15 @@ export const BookList = ({ searchQuery }) => {
     return (
         <div className={styles.container}>
             {filteredBooks.length === 0 ? (
-                <p>No books found.</p>
+                <div className={styles.noFoundContainer}>
+                    <img
+                        src={NoBooksImg}
+                        alt="login image"
+                        className={styles.noBooksImg}
+                    />
+                    <p>Oops, no matches. Try to add your book</p>
+                </div>
+
             ) : (
                 <ul className={styles.bookList}>
                     {filteredBooks.map(book => (

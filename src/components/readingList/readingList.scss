@@ -10,19 +10,19 @@
 
     &__item {
         width: 85%;
-        margin: 0 auto; 
+        margin: 0 auto;
     }
-  
+
     &__noBooks {
       text-align: center;
     }
-  
+
     &__image {
       width: 50%;
       max-width: 300px;
       margin-bottom: 20px;
     }
-  
+
     &__message {
       font-size: 16px;
       color: #333;
@@ -35,7 +35,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 50px;
   }
-  
+
   .readingList__item {
     width: 100%;
     max-width: 500px;
@@ -50,10 +50,14 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
-  
+
   .readingList__item {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
   }
+}
+
+.noBooksImg {
+  width: 20%;
 }
