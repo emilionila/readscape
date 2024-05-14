@@ -28,15 +28,45 @@
     border-radius: 20px;
   }
 
-  .qrcode {
-    background-color: #6EAA89;
-    padding: 20px;
-    border: 3px solid;
-    border-color: #518A6B;
-    border-radius: 30px;
-    width: 80%;
-    height: auto;
+.qrcode {
+  background-color: #6EAA89;
+  padding: 20px;
+  border: 3px solid;
+  border-color: #518A6B;
+  border-radius: 30px;
+  width: 80%;
+  height: auto;
+}
+
+.copy-success {
+  position: fixed;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  opacity: 1;
+  visibility: visible;
+  transition: visibility 0s linear 3s, opacity 3s linear;
+}
+
+@keyframes fade-out {
+  0% {
+      opacity: 1;
+      visibility: visible;
   }
+  100% {
+      opacity: 0;
+      visibility: hidden;
+  }
+}
+
+.copy-success.show {
+  animation: fade-out 3s forwards;
+}
 
 @media (min-width: 589px) {
   .qrContainer {

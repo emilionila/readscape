@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './readingListItem.scss';
+import './SharedListItem.scss';
 import { firestore, storage } from '../../db/db';
 import { doc, getDoc } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
-import StatusDropbox from '../statusDropbox/statusDropbox';
 
-const ReadingListItem = ({ bookId, userId }) => {
+export const SharedListItem = ({ bookId, userId }) => {
   const [book, setBook] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
@@ -36,8 +35,6 @@ const ReadingListItem = ({ bookId, userId }) => {
       console.error('Error fetching book:', error);
     }
   };
-  
-
 
   const handleItemClick = () => {
     navigate(`/books/${bookId}`);
@@ -48,17 +45,15 @@ const ReadingListItem = ({ bookId, userId }) => {
   }
 
   return (
-    <div className="readingListItem" onClick={handleItemClick}>
-      <div className="readingListItem__content">
-        <img src={imageUrl} className="readingListItem__image" alt="Book cover" />
-        <div className="readingListItem__details">
-          <h3 className="readingListItem__title">{book.title}</h3>
-          <p className="readingListItem__author">{book.author}</p>
-          <StatusDropbox bookId={bookId} userId={userId} currentStatus={book.status} refreshList={fetchBook} />
+    <div className="sharedListItem" onClick={handleItemClick}>
+      <div className="sharedListItem__content">
+        <img src={imageUrl} className="sharedListItem__image" alt="Book cover" />
+        <div className="sharedListItem__details">
+          <h3 className="sharedListItem__title">{book.title}</h3>
+          <p className="sharedListItem__author">{book.author}</p>
+          <p className='sharedListItem__status'>{book.status}</p>
         </div>
       </div>
     </div>
   );
 };
-
-export default ReadingListItem;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './header.scss';
-import { NotificationIcon, ProfileIcon } from '../../assets/icons';
+import { ProfileIcon } from '../../assets/icons';
 import useAuth from "../../db/user";
 
 const Header = () => {
@@ -43,9 +43,6 @@ const Header = () => {
                 </ul>
             </div>
             <div className="header__right">
-                <div className="header__button">
-                    <NotificationIcon width="24px" height="24px" />
-                </div>
                 <button className="header__button" onClick={() => navigate('/profile')}>
                     <ProfileIcon width="24px" height="24px" />
                 </button>

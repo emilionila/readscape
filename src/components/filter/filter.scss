@@ -1,0 +1,44 @@
+.filter {
+  position: relative;
+
+  &__toggle {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  &__toggle svg {
+    margin-right: 0.5rem;
+  }
+  
+  &__panel {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    width: 200px;
+  }
+
+  &__optionsСontainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__option {
+    margin-bottom: 0.5rem;
+  }
+
+  &__option input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+}

@@ -1,0 +1,117 @@
+.BookInfoForm {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    width: 60%;
+
+    &__image {
+        flex-shrink: 0;
+        width: 25%;
+        margin-right: 100px;
+    }
+    
+    &__details {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__description {
+        margin-top: 20px;
+    }
+
+    &__description h3 {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    &__description p {
+        font-size: 16px;
+        color: #333;
+    }
+
+    &__shareBtn {
+        display: inline-block;
+        outline: 0;
+        cursor: pointer;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px 0 rgb(213 217 217 / 50%);
+        background: #FFF;
+        border: 1px solid #D5D9D9;
+        font-size: 13px;
+        height: 31px;
+        padding: 0 11px;
+        text-align: center;
+        font-weight: 400;
+        color: #0F1111;
+        margin-top: 20px;
+        :hover{
+            background-color: #F7FAFA;
+            border-color: #D5D9D9;
+        }
+        
+    }
+
+    .copy-success {
+        position: fixed;
+        bottom: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        z-index: 1000;
+        opacity: 1;
+        visibility: visible;
+        transition: visibility 0s linear 3s, opacity 3s linear;
+    }
+    
+    @keyframes fade-out {
+        0% {
+            opacity: 1;
+            visibility: visible;
+        }
+        100% {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+    
+    .copy-success.show {
+        animation: fade-out 3s forwards;
+    }
+    
+}
+
+@media (max-width: 1700px){
+    .BookInfoForm {
+        &__image {
+            margin-right: 220px;
+        }
+    }
+}
+
+
+@media (max-width: 768px) {
+    .BookInfoForm {
+        flex-direction: column;
+        width: 90%;
+        margin: 50px auto;
+        
+        &__image {
+            width: 70%;
+            margin: 0 auto 20px;
+        }
+
+        &__image img {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+}
