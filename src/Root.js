@@ -11,6 +11,8 @@ import {ProfileSettingsPage} from "./pages/profileSettingsPage";
 import {BookPage} from "./pages/bookPage"
 import useAuth from "./db/user";
 import {SearchBooksPage} from "./pages/SearchBooksPage";
+import { CommunityPage } from './pages/communityPage/CommunityPage';
+import { SharedPage } from './pages/sharedPage/SharedPage';
 import {AnalyticsPage} from "./pages/AnalyticsPage";
 
 export const Root = () => {
@@ -23,12 +25,15 @@ export const Root = () => {
                     <Route index element={<WelcomePage/>}/>
                     <Route path="signup" element={<SignUpPage/>}/>
                     <Route path="login" element={<LogInPage/>}/>
+                    <Route path="sharedBooks/:userId" element={<SharedPage/>}/>
+                    
                     {user && (
                         <>
                             <Route path="inprogress" element={<BooksInProgressPage/>}/>
                             <Route path="addbook" element={<NewBookPage/>}/>
                             <Route path="profile" element={<ProfileSettingsPage/>}/>
                             <Route path="search" element={<SearchBooksPage/>}/>
+                            <Route path="community" element={<CommunityPage userId={user ? user.firestoreUserId : null}/>}/>
                             <Route path="analytics" element={<AnalyticsPage/>}/>
                             <Route path="*" element={<NotFound/>}/>
                             <Route path="/books/:bookId" element={<BookPage/>}/>

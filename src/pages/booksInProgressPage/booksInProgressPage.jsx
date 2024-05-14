@@ -21,6 +21,7 @@ export const BooksInProgressPage = () => {
     const handleFilterChange = (newFilters) => {
         setFilters(newFilters);
     };
+    
 
     return (
         <div>
