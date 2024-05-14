@@ -1,3 +1,5 @@
+@import "../../assets/main";
+
 .status-select-container {
     .status-select-field {
       display: flex;
@@ -21,12 +23,12 @@
 
       select option {
         margin: 5%;
-        background-color: #F9F7F6;
+        background-color: $primary-background;
         color: #A2A1A0;
       }
 
       select option:hover, select option:focus, select option:active {
-        outline-color: #6EAA89 !important;
+        outline-color: $primary !important;
         color: #fff !important;
       }
     }

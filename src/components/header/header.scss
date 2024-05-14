@@ -1,5 +1,7 @@
+@import "../../assets/main";
+
 .header {
-  background-color: #f9f7f6;
+  background-color: $primary-background;
   display: flex;
   justify-content: space-between;
   align-items: center;
