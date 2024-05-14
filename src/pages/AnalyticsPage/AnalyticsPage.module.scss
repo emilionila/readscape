@@ -1,0 +1,34 @@
+@import "src/assets/main";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 120px;
+}
+
+.workingPicture {
+  width: 25%;
+  margin: auto;
+}
+
+.analyticsTitle {
+  font-size: 24px;
+  text-align: center;
+  color: $primary;
+}
+
+.analyticsSubtitle {
+  font-size: 18px;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+  .workingPicture {
+    width: 80%;
+  }
+}

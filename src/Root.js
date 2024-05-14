@@ -11,6 +11,7 @@ import {ProfileSettingsPage} from "./pages/profileSettingsPage";
 import {BookPage} from "./pages/bookPage"
 import useAuth from "./db/user";
 import {SearchBooksPage} from "./pages/SearchBooksPage";
+import {AnalyticsPage} from "./pages/AnalyticsPage";
 
 export const Root = () => {
     const user = useAuth();
@@ -28,6 +29,7 @@ export const Root = () => {
                             <Route path="addbook" element={<NewBookPage/>}/>
                             <Route path="profile" element={<ProfileSettingsPage/>}/>
                             <Route path="search" element={<SearchBooksPage/>}/>
+                            <Route path="analytics" element={<AnalyticsPage/>}/>
                             <Route path="*" element={<NotFound/>}/>
                             <Route path="/books/:bookId" element={<BookPage/>}/>
                         </>

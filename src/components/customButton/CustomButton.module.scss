@@ -3,7 +3,7 @@
 .button {
   position: relative;
   padding: 13px 109px;
-  width: 90%;
+  width: 100%;
   border-radius: 50px;
   text-align: center;
   font-family: "Poppins", sans-serif;
@@ -36,6 +36,10 @@
   border-color: $primary;
 }
 
+.wide {
+  width: 100%;
+}
+
 .danger {
   color: $accent;
   background-color: $secondary;
@@ -52,10 +56,16 @@
   .button {
     width: 60%;
   }
+  .wide {
+    width: 100%;
+  }
 }
 
 @media (min-width: 780px) {
   .button {
     width: 40%;
+  }
+  .wide {
+    width: 100%;
   }
 }
