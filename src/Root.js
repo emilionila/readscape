@@ -9,6 +9,8 @@ import NewBookPage from './pages/newBookPage/NewBookPage';
 import {NotFound} from "./pages/NotFound";
 import {ProfileSettingsPage} from "./pages/profileSettingsPage";
 import useAuth from "./db/user";
+import { CommunityPage } from './pages/communityPage/CommunityPage';
+import { SharedPage } from './pages/sharedPage/SharedPage';
 
 export const Root = () => {
     const user = useAuth();
@@ -20,11 +22,14 @@ export const Root = () => {
                     <Route index element={<WelcomePage/>}/>
                     <Route path="signup" element={<SignUpPage/>}/>
                     <Route path="login" element={<LogInPage/>}/>
+                    <Route path="sharedBooks/:userId" element={<SharedPage/>}/>
+                    
                     {user && (
                         <>
                             <Route path="inprogress" element={<BooksInProgressPage/>}/>
                             <Route path="addbook" element={<NewBookPage/>}/>
                             <Route path="profile" element={<ProfileSettingsPage/>}/>
+                            <Route path="community" element={<CommunityPage/>}/>
                             <Route path="*" element={<NotFound/>}/>
                         </>
                     )}
