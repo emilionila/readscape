@@ -1,12 +1,17 @@
+@import "../../assets/main";
+
 .Dropbox__statusButton {
     width: 100%;
     padding: 10px 15px;
     color: white;
     border-radius: 8px;
     border: none;
-    background-color: #6EAA89;
+    background-color: $primary;
     cursor: pointer;
     margin-bottom: 5px;
+    &:hover{
+        background-color: $btn-hover;
+    }
 }
 
 .Dropbox__statusContainer {
@@ -62,7 +67,7 @@
     padding: 10px 15px;
     margin: 10px 5%;
     color: white;
-    background-color: #6EAA89;
+    background-color: $primary;
     border: none;
     border-radius: 8px;
     cursor: pointer;

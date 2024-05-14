@@ -8,17 +8,20 @@ export const CustomButton = (props) => {
         disabled,
         onClick,
         btnStyle,
-        loading
+        loading,
+        classBtn
     } = props;
 
     const buttonClassName = btnStyle === 'empty' ? styles.empty : btnStyle === 'danger' ? styles.danger : styles.full;
+    const widthClass = classBtn ? styles.wide : '';
+
 
     return (
         <button
             type={type}
             disabled={disabled}
             onClick={onClick}
-            className={`${styles.button} ${buttonClassName}`}
+            className={`${styles.button} ${buttonClassName} ${widthClass}`}
         >
             {title}
             {loading && (

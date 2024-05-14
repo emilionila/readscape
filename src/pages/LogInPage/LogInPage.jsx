@@ -41,7 +41,6 @@ export const LogInPage = () => {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             setLoading(false);
-            console.log("User:", user);
             navigate('/inprogress');
         } catch (error) {
             console.error("Login error:", error);
@@ -76,9 +75,7 @@ export const LogInPage = () => {
                 navigate("/inprogress");
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
-                console.log(token, 'userGoogleToken')
                 const user = result.user;
-                console.log(user, 'user')
             }).catch((error) => {
             console.log(error)
             const errorCode = error.code;

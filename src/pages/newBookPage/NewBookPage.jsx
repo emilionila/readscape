@@ -33,36 +33,28 @@ const NewBookPage = () => {
       const imageRef = ref(storage, `booksImages/${coverImage.name}`);
 
       await uploadBytes(imageRef, coverImage).then(() => {
-        console.log('Uploaded cover image');
       });
 
       const imageUrl = await getDownloadURL(imageRef);
 
       const bookRef = await addDoc(collection(firestore, "books"), {
         title: title,
-        status: status,
         description: description,
         feedback: feedback,
         author: author,
         pages: pages,
         imageURL: imageUrl,
       });
-      console.log("Book added with ID: ", bookRef.id);
 
       const userBooksRef = doc(firestore, "users", user.firestoreUserId, "userBooks", bookRef.id);
       await setDoc(userBooksRef, {
         title: title,
         status: status,
-        description: description,
-        feedback: feedback,
-        author: author,
-        pages: pages,
-        imageURL: imageUrl,
       });
-      console.log("Book added to user's collection");
+
 
       setTitle('');
-      setStatus('reading');
+      setStatus('Reading');
       setDescription('');
       setFeedback('');
       setCoverImage(null);

@@ -41,11 +41,8 @@ export const SignUpPage = () => {
                     id: userDocRef.id,
                 });
 
-                console.log("Document written with ID: ", userDocRef.id);
-
                 const user = userCredential.user;
 
-                console.log(user);
                 navigate("/inprogress");
             } catch (error) {
                 if (error.code === 'auth/invalid-email') {
