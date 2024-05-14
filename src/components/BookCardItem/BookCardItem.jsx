@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { firestore, storage } from '../../db/db';
-import { doc, getDoc } from 'firebase/firestore';
+import {collection, doc, getDoc, getDocs, query, setDoc, where} from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { Loader } from "../loader";
 import { CustomButton } from "../customButton";
 import {useNavigate} from "react-router-dom";
 import styles from './BookCardItem.module.scss';
+import useAuth from "../../db/user";
 
 export const BookCardItem = (props) => {
     const navigate = useNavigate();
+    const user = useAuth();
+
 
     const [book, setBook] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
-    console.log(props.book)
+    const [loading, setLoading] = useState(false);
     const bookId = props.book.id;
 
     useEffect(() => {
@@ -44,18 +47,31 @@ export const BookCardItem = (props) => {
         navigate(`/books/${bookId}`);
     };
 
+    const addBookToUserLibrary = async () => {
+        setLoading(true);
+        const userBooksRef = doc(firestore, "users", user.firestoreUserId, "userBooks", bookId);
+        await setDoc(userBooksRef, {
+            title: book.title,
+            status: 'Going to Read',
+        });
+        setLoading(false);
+    }
+
+
     return (
-        <div className={styles.bookCardItem} onClick={handleItemClick}>
-            <div className={styles.bookCardContent}>
+        <div className={styles.bookCardItem} >
+            <div className={styles.bookCardContent} >
                 <img src={imageUrl} className={styles.bookCardImg} alt="Book cover" />
                 <div className={styles.bookCardDetails}>
-                    <h3 className={styles.bookCardTitle}>{book.title}</h3>
+                    <h3 className={styles.bookCardTitle} onClick={handleItemClick}>{book.title}</h3>
                     <p className={styles.bookCardAuthor}>{book.author}</p>
                     <CustomButton
                         type={'submit'}
                         title={'Add'}
                         btnStyle='full'
-                        onClick={() => console.log('click')}
+                        loading={loading}
+                        onClick={addBookToUserLibrary}
+                        classBtn='wide'
                     />
                 </div>
             </div>

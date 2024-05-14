@@ -3,6 +3,8 @@
   padding: 10px;
   border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 378px;
+  width: 100%;
 }
 
 .bookCardContent {
@@ -12,7 +14,7 @@
 }
 
 .bookCardImg {
-  width: auto;
+  width: 100px;
   height: 150px;
   margin-right: 10px;
   border-radius: 5px;
