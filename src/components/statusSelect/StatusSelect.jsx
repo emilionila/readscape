@@ -8,7 +8,7 @@ const StatusSelect = ({ value, onChange }) => {
         <label>Reading Status</label>
         <select value={value} onChange={(e) => onChange(e.target.value)}>
           <option value="Reading">Reading</option>
-          <option value="Going to read">Going to Read</option>
+          <option value="Going to Read">Going to Read</option>
           <option value="Finished">Finished</option>
         </select>
       </div>
